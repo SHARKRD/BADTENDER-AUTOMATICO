@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BARBOT</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/BARBOT0.2.CSS">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="nombre">
+        <h1>BARTENDER AUTOMATICO</h1>
+    </div>
+    <section class="contenido flex text">
+        <div class="bebida">
+            <h2>Tom Collins</h2>
+            <img src="tom.jpg" class="imagen" alt="Foto de un Tom Collins">
+            <p class="precio">$500</p>
+            <h4>Bebida Alcohólica</h4>
+            <hr>
+            <p>Ginebra</p>
+            <p>Zumo de limon  </p>
+            <p>Soda</p>
+            <p><button id="button" class="cantidad">Seleccionar</button></p>
+
+        </div>
+        <div class="bebida">
+            <h2>Cuba Libre</h2>
+            <img src="cuba.jpg" class="imagen" alt="Foto de la bebida cuba libre">
+            <p class="precio">$350</p>
+            <h4>Bebida Alcohólica</h4>
+            <hr>
+            <p>Ron Havana</p>
+            <p>Coca-Cola</p>
+            <p><button id="button1" class="cantidad">Seleccionar</button></p>
+
+        </div>
+        <div class="bebida">
+            <h2>Daddy Don't Go</h2>
+            <img src="ron.jpg" class="imagen" alt="Foto de un Tom Collins">
+            <p class="precio">$200</p>
+            <h4>Bebida Alcohólica</h4>
+            <hr>
+            <p>Ron blanco</p>
+            <p>Zumo de Fresa </p>
+            <p><button id="button2" class="cantidad">Seleccionar</button></p>
+
+        </div>
+        <div class="bebida">
+            <h2>Moscow Mule</h2>
+            <img src="moscuw mule.jpg" class="imagen" alt="Foto de un Tom Collins">
+            <p class="precio">$500</p>
+            <h4>Bebida Alcohólica</h4>
+            <hr>
+            <p>Vodka</p>
+            <p>Jugo de Lima</p>
+            <p>Lima Fresca</p>
+            <p>Cerveza de Jengibre</p>
+           <p> <button id="button3" class="cantidad">Seleccionar</button></p>
+
+        </div>
+        <div class="bebida">
+            <h2>Soda Amarga</h2>
+            <img src="soda.jpg" class="imagen" alt="Foto de un Tom Collins">
+            <p class="precio">$50</p>
+            <p>Agua Carbonatada</p>
+            <hr>
+            <p>Agua Carbonatada</p>
+            <p><button id="button4" class="cantidad">Seleccionar</button></p>
+            
+
+        </div>
+        <div class="bebida">
+          <h2>Coca-Cola</h2>
+          <img src="istockphoto-542322474-170667a.jpg" class="imagen" alt="Foto de un Tom Collins">
+          <p class="precio">$65</p>
+          <hr>
+          <p>Agua Carbonatada</p>
+          <p><button id="button5" class="cantidad">Seleccionar</button></p>
+      </div>
+      <div class="bebida">
+        <h2>Seven-UP</h2>
+        <img src="3080040_f.jpg" class="imagen" alt="Foto de un Tom Collins">
+        <p class="precio">$50</p>
+        <p>Soda Carbonatada</p>
+        <hr>
+        <p><button id="button6" class="cantidad">Seleccionar</button></p>
+    </div>
+    <div class="bebida">
+        <h2>FIREBALL</h2>
+        <img src="R.jpeg" class="imagen" alt="Foto de un Tom Collins">
+        <p class="precio">$50</p>
+        <p>Bebida Alcohólica</p>
+        <hr>
+        <p><button id="button7" class="cantidad">Seleccionar</button></p>
+    </div>
+
+        <div>
+            <!-- <a href="#"  class="menu desaparece"> inicio</a> -->
+            <!-- <a href="#"  class="menu desaparece">nosotros</a> -->
+        </div>
+        
+    </section>
+
+
+
+    <script>
+         
+// ******************************************************************************
+var gateway = `ws://192.168.7.77/ws`;
+  var websocket;
+  window.addEventListener('load', onLoad);
+  function initWebSocket() {
+    console.log('Trying to open a WebSocket connection...');
+    websocket = new WebSocket(gateway);
+    websocket.onopen    = onOpen;
+    websocket.onclose   = onClose;
+    websocket.onmessage = onMessage; // <-- add this line
+  }
+  function onOpen(event) {
+    console.log('Connection opened');
+  }
+  function onClose(event) {
+    console.log('Connection closed');
+    setTimeout(initWebSocket, 2000);
+  }
+  function onMessage(event) {
+    var state;
+    if (event.data == "1"){
+      state = "ON";
+    }
+    else{
+      state = "OFF";
+    }
+    document.getElementById('state').innerHTML = state;
+  }
+  function onLoad(event) {
+    initWebSocket();
+    initButton();
+    initButton1();
+    initButton2();
+    initButton3();
+    initButton4();
+    initButton5();
+    initButton6();
+    initButton7();
+  }
+  function initButton() {
+    document.getElementById('button').addEventListener('click', toggle);
+  }
+  function initButton1() {
+    document.getElementById('button1').addEventListener('click', toggle1);
+  }
+
+  function initButton2() {
+    document.getElementById('button2').addEventListener('click', toggle2);
+  }
+
+  function initButton3() {
+    document.getElementById('button3').addEventListener('click', toggle3);
+  }
+
+  function initButton4() {
+    document.getElementById('button4').addEventListener('click', toggle4);
+
+  }
+
+  function initButton5(){
+      document.getElementById('button5').addEventListener('click', toggle5);
+  }
+  function initButton6(){
+      document.getElementById('button6').addEventListener('click', toggle6);
+  }
+  function initButton7(){
+      document.getElementById('button7').addEventListener('click', toggle7);
+  }
+
+
+
+  function toggle(){
+    websocket.send('toggle');
+  }
+  function toggle1(){
+    websocket.send('toggle1');
+  }
+  function toggle2(){
+    websocket.send('toggle2');
+  }
+  function toggle3(){
+    websocket.send('toggle3');
+  }
+  function toggle4(){
+    websocket.send('toggle4');
+  }
+
+  function toggle5(){
+    websocket.send('toggle5');
+  }
+  function toggle6(){
+    websocket.send('toggle6');
+  }
+  function toggle7(){
+    websocket.send('toggle7');
+  }
+    </script> 
+</body>
+</html>
